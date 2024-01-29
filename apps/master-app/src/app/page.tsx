@@ -1,9 +1,11 @@
+import { Button } from "../components/ui/button";
 
 
 export default function Page(): JSX.Element {
   return (
-    <main className="flex flex-col items-center justify-between min-h-screen p-24">
-     <div>hello master-app!</div>
+    <main>
+      <div className=" text-center text-red-500">hello master-app!</div>
+      <Button>shadcn</Button>
     </main>
   );
 }
