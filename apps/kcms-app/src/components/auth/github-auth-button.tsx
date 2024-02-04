@@ -1,8 +1,8 @@
-import { Button } from '@aionx/aionx-ui';
+import { Button } from '../ui/button';
 import React from 'react';
-import { Icons } from './icons';
+import { Icons } from '../common/icons';
 import { useSearchParams } from 'next/navigation';
-import { signIn } from 'next-auth/react';
+// import { signIn } from 'next-auth/react';
 
 export default function GitHubSignInButton() {
   const searchParams = useSearchParams();
@@ -12,9 +12,9 @@ export default function GitHubSignInButton() {
       className="w-full"
       variant="outline"
       type="button"
-      onClick={() =>
-        signIn('github', { callbackUrl: callbackUrl ?? '/dashboard' })
-      }
+      // onClick={() =>
+      //   signIn('github', { callbackUrl: callbackUrl ?? '/dashboard' })
+      // }
     >
       <Icons.gitHub className="mr-2 h-4 w-4" />
       GitHub

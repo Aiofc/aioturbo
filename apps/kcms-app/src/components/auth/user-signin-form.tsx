@@ -1,21 +1,23 @@
 'use client';
 import React, { useState } from 'react';
 import {
-  Button,
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
-  Input,
-} from '@aionx/aionx-ui';
+  FormMessage
+} from '../ui/form';
+import { Button } from '../ui/button';
+import { Input } from "../ui/input";
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import GitHubSignInButton from '../github-auth-button';
+import GitHubSignInButton from './github-auth-button';
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import {encryptA256GCM} from "../../lib/symmetric-encryption.ts";
+
 
 const formSchema = z.object({
   email: z.string().email({ message: '请输入规范的邮箱地址' }),
@@ -43,7 +45,7 @@ export default function UserSignInForm() {
     // 登录请求
     const signInData = await signIn('credentials', {
       email: data.email,
-      password: data.password,
+      password: encryptA256GCM(data.password),
       redirect: false,
     });
     setLoading(false);
@@ -51,6 +53,7 @@ export default function UserSignInForm() {
     if (signInData?.error) {
       console.log('登录失败', signInData.error);
     } else if (signInData?.ok && signInData.status === 200) {
+        console.log('登录成功', signInData)
       router.push(callbackUrl? callbackUrl : '/dashboard')
     }
   };

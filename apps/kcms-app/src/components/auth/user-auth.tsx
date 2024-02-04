@@ -1,9 +1,9 @@
 'use client';
-import { Button } from '@aionx/aionx-ui';
+import { Button } from '../ui/button';
 import { useState } from 'react';
-import UserSignInForm from './forms/user-signin-form';
+import UserSignInForm from './user-signin-form';
 import AuthTermFoot from './auth-terms-foot';
-import UserSignUpForm from './forms/user-signup-form';
+import UserSignUpForm from './user-signup-form';
 
 export default function UserAuth() {
   const [choice, setChoice] = useState(false);

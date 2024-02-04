@@ -1,7 +1,8 @@
-import React from 'react'
+import React from "react";
+import ChatComponent from "../../components/chat/chat-component";
 
 export default function ChatPage() {
   return (
-    <div>ChatPage</div>
-  )
+    <ChatComponent defaultLayout={undefined} navCollapsedSize={0} />
+  );
 }

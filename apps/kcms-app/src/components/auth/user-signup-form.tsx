@@ -1,19 +1,19 @@
 'use client';
 import React, { useState } from 'react';
 import {
-  Button,
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-  Input,
-} from '@aionx/aionx-ui';
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage
+} from '../ui/form';
+import { Button } from '../ui/button';
+import { Input } from "../ui/input";
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import GitHubSignInButton from '../github-auth-button';
+import GitHubSignInButton from './github-auth-button';
 import { useSearchParams } from 'next/navigation';
 
 const formSchema = z.object({

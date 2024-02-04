@@ -11,8 +11,13 @@ import ThemeToggle from './ThemeToggle/theme-toggle';
 import { buttonVariants } from '../ui/button';
 import { cn } from '../../lib/utils';
 import { UserAccount } from './UserAccount';
+import {usePathname} from "next/navigation";
 
 export function RootHeader() {
+  const pathname = usePathname()
+  if( pathname === '/auth') {
+    return <></>
+  }
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center">
