@@ -12,7 +12,7 @@ export default function KnowledgeComponent() {
     <div className='space-y-6'>
       <div className='flex items-center justify-between'>
         <Heading title={"知识库"} description={"知识库管理页面"} />
-        <Link href={"/knowledge/edit"} className={buttonVariants({ variant: "default" })}>新增</Link>
+        <Link href={"/knowledge/create"} className={buttonVariants({ variant: "default" })}>新增</Link>
       </div>
       <KnowledgeManagerTable data={data} />
     </div>

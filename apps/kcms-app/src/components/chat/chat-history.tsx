@@ -25,8 +25,8 @@ export default function ChatHistory({ historyList }: ChatHistoryProps) {
     <div className='flex flex-col'>
       {historyList.map((history, index) => {
         return (
-          <DropdownMenu>
-            <div key={index} className='flex flex-row justify-between w-full py-2 hover:bg-slate-400 rounded-md'>
+          <DropdownMenu key={index}>
+            <div className='flex flex-row justify-between w-full py-2 hover:bg-slate-400 rounded-md'>
               <div className='text-lg font-bold flex items-center'>
                 {history.title}
               </div>

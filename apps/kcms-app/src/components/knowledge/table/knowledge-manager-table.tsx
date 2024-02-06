@@ -66,7 +66,7 @@ export default function KnowledgeManagerTable({
         tableFilter={tableFilter}
       />
       <ScrollArea className='rounded-md border h-[50vh]'>
-        <TableCore table={table} columns={columns} onClickPush={"/knowledge"}/>
+        <TableCore table={table} columns={columns}/>
         <ScrollBar orientation='horizontal' />
       </ScrollArea>
       <div className="flex items-center justify-end space-x-2 py-4">
