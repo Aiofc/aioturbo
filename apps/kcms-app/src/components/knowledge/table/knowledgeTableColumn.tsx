@@ -1,11 +1,11 @@
 import React from 'react'
 import { ColumnDef } from '@tanstack/react-table';
-import { KnowledgeManageTableColumns } from '../../types';
-import { Button } from '../ui/button';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
-import { Checkbox } from '../ui/checkbox';
-import { TableColumnHeader } from '../common/TableColumnHeader';
-
+import { KnowledgeManageTableColumns } from '../../../types';
+import { Button } from '../../ui/button';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../../ui/dropdown-menu';
+import { Checkbox } from '../../ui/checkbox';
+import { TableColumnHeader } from '../../common/TableColumnHeader';
+import { useRouter } from 'next/navigation';
 
 export const columns: ColumnDef<KnowledgeManageTableColumns>[] = [
   {
@@ -35,7 +35,7 @@ export const columns: ColumnDef<KnowledgeManageTableColumns>[] = [
   {
     accessorKey: 'id',
     header: ({ column }) => (
-      <TableColumnHeader column={column} title="ID"/>
+      <TableColumnHeader column={column} title="ID" className='hidden'/>
     ),
     cell: ({ row }) => <div className="w-[80px] hidden">{row.getValue("id")}</div>,
     enableSorting: false,
@@ -80,6 +80,7 @@ export const columns: ColumnDef<KnowledgeManageTableColumns>[] = [
   {
     id: 'actions',
     cell: ({ row }) => {
+      const router = useRouter();
       return (
         <div>
           <DropdownMenu>
@@ -87,8 +88,11 @@ export const columns: ColumnDef<KnowledgeManageTableColumns>[] = [
               <Button variant="default">选项</Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="border-2 w-20 rounded-lg">
-              <DropdownMenuItem onSelect={() => console.log(row)}>
+              <DropdownMenuItem onClick={() => router.push(`/knowledge/${row.getValue('id')}`)}>
                 <div className="text-center w-full">编辑</div>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => console.log(row)}>
+                <div className="text-center w-full">删除</div>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

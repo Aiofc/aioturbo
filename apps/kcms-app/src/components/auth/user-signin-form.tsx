@@ -10,20 +10,13 @@ import {
 } from '../ui/form';
 import { Button } from '../ui/button';
 import { Input } from "../ui/input";
-import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import GitHubSignInButton from './github-auth-button';
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import {encryptA256GCM} from "../../lib/symmetric-encryption.ts";
-
-
-const formSchema = z.object({
-  email: z.string().email({ message: '请输入规范的邮箱地址' }),
-  password: z.string().min(8, { message: '密码至少8位' }),
-});
-type UserFormValue = z.infer<typeof formSchema>;
+import {encryptA256GCM} from "../../lib/symmetric-encryption";
+import { SignInFormType, signInFormSchema } from '../../types/index';
 
 export default function UserSignInForm() {
   const router = useRouter();
@@ -35,12 +28,12 @@ export default function UserSignInForm() {
     password: '12345678',
   };
 
-  const form = useForm<UserFormValue>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<SignInFormType>({
+    resolver: zodResolver(signInFormSchema),
     defaultValues,
   });
 
-  const onSubmit = async (data: UserFormValue) => {
+  const onSubmit = async (data: SignInFormType) => {
     setLoading(true);
     // 登录请求
     const signInData = await signIn('credentials', {

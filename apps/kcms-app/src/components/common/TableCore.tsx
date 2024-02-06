@@ -21,7 +21,7 @@ interface DataTableCoreProps<TData> {
 
 export function TableCore<TData>({
   table,
-  columns,
+  columns
 }: DataTableCoreProps<TData>) {
   return (
     <Table>

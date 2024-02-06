@@ -1,33 +1,25 @@
+"use client";
 import React from 'react'
 import ChatHistory from '../../components/chat/chat-history'
 import { ChatHistoryList } from '../../types'
-
+import { Button } from "../../components/ui/button";
+import { signIn } from '../../actions/auth-action';
+import { hitstoryList } from '../../demo-data/history-demo';
 export default function TestPage() {
 
-  const hitstoryList: ChatHistoryList = [
-    {
-      id: "1",
-      title: "title1",
-      description: "description",
-    },
-    {
-      id: "2",
-      title: "title2",
-      description: "description2",
-    },
-    {
-      id: "3",
-      title: "title3",
-      description: "description3",
-    },
-    {
-      id: "4",
-      title: "title4",
-      description: "description4",
-    }
-  ]
+  function Test() {
+
+    return (<Button onClick={async ()=>{
+      const data = await signIn({ email: 'test@gmail.com', password: '123456789' })
+      console.log(data)
+    }}>test</Button>)
+  }
 
   return (
-    <ChatHistory historyList={hitstoryList} />
+      <>
+        <Test></Test>
+        <ChatHistory historyList={hitstoryList} />
+      </>
+
   )
 }

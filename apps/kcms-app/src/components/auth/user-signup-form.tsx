@@ -10,18 +10,11 @@ import {
 } from '../ui/form';
 import { Button } from '../ui/button';
 import { Input } from "../ui/input";
-import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import GitHubSignInButton from './github-auth-button';
 import { useSearchParams } from 'next/navigation';
-
-const formSchema = z.object({
-  email: z.string().email({ message: '请输入规范的邮箱地址' }),
-  username: z.string().min(2, { message: '用户名至少2个字符' }),
-  password: z.string().min(8, { message: '密码至少8位' }),
-});
-type UserFormValue = z.infer<typeof formSchema>;
+import { SignUpFormType, signUpFormSchema } from '../../types';
 
 export default function UserSignUpForm() {
   const searchParams = useSearchParams();
@@ -32,12 +25,12 @@ export default function UserSignUpForm() {
     password: '',
   };
 
-  const form = useForm<UserFormValue>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<SignUpFormType>({
+    resolver: zodResolver(signUpFormSchema),
     defaultValues,
   });
 
-  const onSubmit = async (data: UserFormValue) => {
+  const onSubmit = async (data: SignUpFormType) => {
     setLoading(true);
     // 注册请求
     console.log('注册：', data, callbackUrl);

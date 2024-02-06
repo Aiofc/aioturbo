@@ -12,13 +12,13 @@ import {
   ColumnFiltersState,
   SortingState,
 } from "@tanstack/react-table";
-import { TableCore } from "../common/TableCore";
-import { KnowledgeManageTableColumns, TableFilterProps } from "../../types";
+import { TableCore } from "../../common/TableCore";
+import { KnowledgeManageTableColumns, TableFilterProps } from "../../../types";
 import { columns } from "./knowledgeTableColumn";
-import { TableToolbar } from "../common/TableToolbar";
-import { Separator } from "../ui/separator";
-import { Button } from "../ui/button";
-import { ScrollArea, ScrollBar } from "../ui/scroll-area";
+import { TableToolbar } from "../../common/TableToolbar";
+import { Separator } from "../../ui/separator";
+import { Button } from "../../ui/button";
+import { ScrollArea, ScrollBar } from "../../ui/scroll-area";
 
 interface KnowledgeManagerTableProps {
   data: KnowledgeManageTableColumns[];
@@ -66,7 +66,7 @@ export default function KnowledgeManagerTable({
         tableFilter={tableFilter}
       />
       <ScrollArea className='rounded-md border h-[50vh]'>
-        <TableCore table={table} columns={columns} />
+        <TableCore table={table} columns={columns} onClickPush={"/knowledge"}/>
         <ScrollBar orientation='horizontal' />
       </ScrollArea>
       <div className="flex items-center justify-end space-x-2 py-4">
