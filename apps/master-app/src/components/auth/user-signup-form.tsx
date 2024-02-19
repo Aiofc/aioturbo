@@ -1,28 +1,32 @@
-'use client';
-import React, { useState } from 'react';
+"use client";
+import React, { useState } from "react";
 import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage
-} from '../ui/form';
-import { Button } from '../ui/button';
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
+import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import GitHubSignInButton from './github-auth-button';
-import { useSearchParams } from 'next/navigation';
-import { SignUpFormType, signUpFormSchema } from '../../types';
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import GitHubSignInButton from "./github-auth-button";
+import { useSearchParams } from "next/navigation";
+import { SignUpFormType, signUpFormSchema } from "../../types";
+import { Checkbox } from "../ui/checkbox";
+import { registerUser } from "../../actions/auth-action";
 
 export default function UserSignUpForm() {
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl');
+  const callbackUrl = searchParams.get("callbackUrl");
   const [loading, setLoading] = useState(false);
   const defaultValues = {
-    email: '',
-    password: '',
+    email: "",
+    password: "",
+    phone: "",
+    checked: false,
   };
 
   const form = useForm<SignUpFormType>({
@@ -33,7 +37,8 @@ export default function UserSignUpForm() {
   const onSubmit = async (data: SignUpFormType) => {
     setLoading(true);
     // 注册请求
-    console.log('注册：', data, callbackUrl);
+    const res = await registerUser(data);
+    console.log(res);
     setLoading(false);
     // 完成跳转
   };
@@ -41,11 +46,9 @@ export default function UserSignUpForm() {
   return (
     <>
       <div className="flex flex-col space-y-2 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">
-          创建一个用户
-        </h1>
+        <h1 className="text-2xl font-semibold tracking-tight">创建一个用户</h1>
         <p className="text-sm text-muted-foreground">
-          请使用您的电子邮件地址注册
+          请注册一个新用户，开始使用我们的服务
         </p>
       </div>
       <Form {...form}>
@@ -55,24 +58,6 @@ export default function UserSignUpForm() {
         >
           <FormField
             control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>邮箱</FormLabel>
-                <FormControl>
-                  <Input
-                    type="email"
-                    placeholder="请输入您的邮箱..."
-                    disabled={loading}
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
             name="username"
             render={({ field }) => (
               <FormItem>
@@ -80,7 +65,7 @@ export default function UserSignUpForm() {
                 <FormControl>
                   <Input
                     type="text"
-                    placeholder="输入用户名..."
+                    placeholder="请输入您用户名..."
                     disabled={loading}
                     {...field}
                   />
@@ -89,6 +74,7 @@ export default function UserSignUpForm() {
               </FormItem>
             )}
           />
+
           <FormField
             control={form.control}
             name="password"
@@ -103,6 +89,44 @@ export default function UserSignUpForm() {
                     {...field}
                   />
                 </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>手机号</FormLabel>
+                <FormControl>
+                  <Input
+                    type="text"
+                    placeholder="输入手机号..."
+                    disabled={loading}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="checked"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <FormLabel>我已阅读并同意</FormLabel>
+                <FormLabel className="text-primary">服务条款</FormLabel>
+
                 <FormMessage />
               </FormItem>
             )}
