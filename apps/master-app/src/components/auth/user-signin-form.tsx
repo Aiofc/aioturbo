@@ -1,29 +1,31 @@
-'use client';
-import React, { useState } from 'react';
+"use client";
+import React, { useState } from "react";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
-} from '../ui/form';
-import { Button } from '../ui/button';
+  FormMessage,
+} from "../ui/form";
+import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import GitHubSignInButton from './github-auth-button';
-import { useRouter, useSearchParams } from 'next/navigation';
-import {signInFormSchema, SignInFormType} from "../../types";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import GitHubSignInButton from "./github-auth-button";
+import { useRouter, useSearchParams } from "next/navigation";
+import { signInFormSchema, SignInFormType } from "../../types";
+import { encryption } from "../../lib/symmetric-encryption.ts";
+import {getToken} from "../../actions/auth-action.ts";
 
 export default function UserSignInForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get('callbackUrl');
+  const callbackUrl = searchParams.get("callbackUrl");
   const [loading, setLoading] = useState(false);
   const defaultValues = {
-    email: 'demo@gmail.com',
-    password: '12345678',
+    username: "admin",
+    password: "123456",
   };
 
   const form = useForm<SignInFormType>({
@@ -31,13 +33,29 @@ export default function UserSignInForm() {
     defaultValues,
   });
 
-  const onSubmit = async () => {
+  const onSubmit = async (formData: SignInFormType) => {
+    const singinData = {
+      username: formData.username,
+      password: encryption(
+        formData.password,
+        process.env.NEXT_PUBLIC_PWD_ENC_KEY as string,
+      ),
+      randomStr: "blockPuzzle",
+      code: "",
+      grant_type: "password",
+      scope: "server",
+    };
     setLoading(true);
     // 登录请求
-
+    const signInData = await getToken(singinData);
     setLoading(false);
     // 判断状态
-
+    if (signInData?.ok) {
+      console.log("登录失败", signInData.error);
+    } else {
+      console.log("登录成功", signInData);
+      router.push(callbackUrl ? callbackUrl : "/");
+    }
   };
 
   return (
@@ -45,7 +63,7 @@ export default function UserSignInForm() {
       <div className="flex flex-col space-y-2 text-center">
         <h1 className="text-2xl font-semibold tracking-tight">用户登录</h1>
         <p className="text-sm text-muted-foreground">
-          请输入您的电子邮件地址登录
+          请输入您的用户名登录
         </p>
       </div>
       <Form {...form}>
@@ -55,14 +73,14 @@ export default function UserSignInForm() {
         >
           <FormField
             control={form.control}
-            name="email"
+            name="username"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>邮箱</FormLabel>
+                <FormLabel>用户名</FormLabel>
                 <FormControl>
                   <Input
-                    type="email"
-                    placeholder="输入您的邮箱..."
+                    type="text"
+                    placeholder="输入您的用户名..."
                     disabled={loading}
                     {...field}
                   />
