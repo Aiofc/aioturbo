@@ -16,9 +16,12 @@ import GitHubSignInButton from "./github-auth-button";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signInFormSchema, SignInFormType } from "../../types";
 import { encryption } from "../../lib/symmetric-encryption.ts";
-import {getToken} from "../../actions/auth-action.ts";
+import { getToken } from "../../actions/auth-action.ts";
+import { Session } from "../../utils/storage.ts";
+import { useToast } from "../ui/use-toast.ts";
 
 export default function UserSignInForm() {
+  const { toast } = useToast();
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
@@ -38,7 +41,7 @@ export default function UserSignInForm() {
       username: formData.username,
       password: encryption(
         formData.password,
-        process.env.NEXT_PUBLIC_PWD_ENC_KEY as string,
+        process.env.NEXT_PUBLIC_PWD_ENC_KEY as string
       ),
       randomStr: "blockPuzzle",
       code: "",
@@ -48,12 +51,23 @@ export default function UserSignInForm() {
     setLoading(true);
     // 登录请求
     const signInData = await getToken(singinData);
+    // 存储信息
+    Session.set("token", signInData.access_token);
+    Session.set("refresh_token", signInData.refresh_token);
     setLoading(false);
     // 判断状态
     if (signInData?.ok) {
-      console.log("登录失败", signInData.error);
+      toast({
+        title: "登录失败",
+        description: signInData.message,
+        variant: "destructive",
+      });
     } else {
-      console.log("登录成功", signInData);
+      toast({
+        title: "登录成功",
+        description: "欢迎回来",
+        variant: "default",
+      });
       router.push(callbackUrl ? callbackUrl : "/");
     }
   };
@@ -62,9 +76,7 @@ export default function UserSignInForm() {
     <>
       <div className="flex flex-col space-y-2 text-center">
         <h1 className="text-2xl font-semibold tracking-tight">用户登录</h1>
-        <p className="text-sm text-muted-foreground">
-          请输入您的用户名登录
-        </p>
+        <p className="text-sm text-muted-foreground">请输入您的用户名登录</p>
       </div>
       <Form {...form}>
         <form

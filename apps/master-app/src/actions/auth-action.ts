@@ -23,7 +23,7 @@ export async function getToken(loginData: LoginData) {
   console.log(params, data);
 
   const response = await fetch(
-    `http://127.0.0.1:9999/auth/oauth2/token?${params}`,
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/oauth2/token?${params}`,
     {
       method: "POST",
       headers: {
