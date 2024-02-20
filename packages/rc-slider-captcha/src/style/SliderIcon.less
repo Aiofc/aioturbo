@@ -1,0 +1,30 @@
+@import './config.less';
+
+@keyframes slider-icon-animate_spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.@{prefixCls}-icon {
+  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-style: normal;
+  line-height: 0;
+  text-align: center;
+  text-transform: none;
+  vertical-align: -0.125em;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  & > svg {
+    line-height: 1;
+  }
+
+  &-spin {
+    animation: slider-icon-animate_spin 1s infinite linear;
+  }
+}

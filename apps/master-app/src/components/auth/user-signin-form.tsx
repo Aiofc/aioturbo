@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import {
   Form,
   FormControl,
@@ -19,6 +19,9 @@ import { encryption } from "../../lib/symmetric-encryption.ts";
 import { getToken } from "../../actions/auth-action.ts";
 import { Session } from "../../utils/storage.ts";
 import { useToast } from "../ui/use-toast.ts";
+import { Dialog, DialogContent, DialogTrigger } from "../ui/dialog.tsx";
+import SlideVerify from "./verify/slide-verify.tsx";
+import {verifyStore} from "../../stores/verifyinfo.ts";
 
 export default function UserSignInForm() {
   const { toast } = useToast();
@@ -31,6 +34,8 @@ export default function UserSignInForm() {
     password: "123456",
   };
 
+  const { captchaVerification } = verifyStore((state) => state);
+
   const form = useForm<SignInFormType>({
     resolver: zodResolver(signInFormSchema),
     defaultValues,
@@ -41,10 +46,10 @@ export default function UserSignInForm() {
       username: formData.username,
       password: encryption(
         formData.password,
-        process.env.NEXT_PUBLIC_PWD_ENC_KEY as string
+        process.env.NEXT_PUBLIC_PWD_ENC_KEY as string,
       ),
       randomStr: "blockPuzzle",
-      code: "",
+      code: captchaVerification,
       grant_type: "password",
       scope: "server",
     };
@@ -73,16 +78,13 @@ export default function UserSignInForm() {
   };
 
   return (
-    <>
+    <Dialog>
       <div className="flex flex-col space-y-2 text-center">
         <h1 className="text-2xl font-semibold tracking-tight">用户登录</h1>
         <p className="text-sm text-muted-foreground">请输入您的用户名登录</p>
       </div>
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-5 w-full"
-        >
+        <form className="space-y-5 w-full">
           <FormField
             control={form.control}
             name="username"
@@ -119,10 +121,11 @@ export default function UserSignInForm() {
               </FormItem>
             )}
           />
-
-          <Button disabled={loading} className="ml-auto w-full" type="submit">
-            登录
-          </Button>
+          <DialogTrigger asChild>
+            <Button disabled={loading} className="ml-auto w-full" type="button">
+              登录
+            </Button>
+          </DialogTrigger>
         </form>
       </Form>
       <div className="relative">
@@ -134,6 +137,9 @@ export default function UserSignInForm() {
         </div>
       </div>
       <GitHubSignInButton />
-    </>
+      <DialogContent className="sm:max-w-md justify-center items-center">
+        <SlideVerify login={() => onSubmit(form.getValues())}/>
+      </DialogContent>
+    </Dialog>
   );
 }

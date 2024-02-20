@@ -11,6 +11,17 @@ interface LoginData {
   grant_type: string;
 }
 
+interface VerifyReqData {
+    captchaType?: string;
+}
+
+interface ReqCheckData {
+    captchaType: string;
+    pointJson: string;
+    token: string;
+}
+
+
 export async function getToken(loginData: LoginData) {
   const params = new URLSearchParams({
     username: loginData.username,
@@ -28,7 +39,7 @@ export async function getToken(loginData: LoginData) {
       method: "POST",
       headers: {
         skipToken: "true",
-        Authorization: "Basic " + btoa("pig:pig"),
+        Authorization: "Basic " + btoa(process.env.NEXT_PUBLIC_OAUTH2_PASSWORD_CLIENT as string),
         "Content-Type": "application/x-www-form-urlencoded",
       },
       body: data,
@@ -49,4 +60,25 @@ export async function registerUser(data: SignUpFormType) {
     }
   );
   return response.json();
+}
+
+export async function getVerify(verifyReqData: VerifyReqData){
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/code/create`, {
+        method: "GET",
+        headers: {
+            contentType: "application/json",
+        },
+    })
+    return response.json();
+}
+
+export async function verifyCode(reqCheckData: ReqCheckData) {
+    const params = new URLSearchParams({ ...reqCheckData }).toString();
+    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/code/check?${params}`, {
+        method: "POST",
+        headers: {
+            contentType: "application/json",
+        }
+    })
+    return response.json();
 }
