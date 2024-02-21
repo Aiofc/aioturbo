@@ -1,0 +1,66 @@
+@import './config.less';
+
+.@{prefixCls}-button {
+  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 40px;
+  height: 100%;
+  padding: 5px 0;
+  color: @button-color;
+  font-size: 22px;
+  line-height: 1;
+  background-color: @button-bg-color;
+  border-radius: 2px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  cursor: grab;
+  transition-timing-function: linear;
+  transition-duration: 0.2s;
+  transition-property: background-color, color;
+  touch-action: none;
+
+  // -pc 用于区分PC端和移动端，移动端不需要移入样式
+  &-active,
+  &-verify,
+  &-pc:hover,
+  &:active {
+    color: @button-hover-color;
+    background-color: @primary;
+  }
+  &-active,
+  &:active {
+    cursor: grabbing;
+  }
+
+  &-verify,
+  &-verify:active {
+    cursor: wait;
+  }
+
+  &-error,
+  &-error:hover,
+  &-error:active {
+    color: @button-hover-color;
+    background-color: @error;
+    cursor: default;
+  }
+
+  &-success,
+  &-success:hover,
+  &-success:active {
+    color: @button-hover-color;
+    background-color: @success;
+    cursor: default;
+  }
+
+  &-disabled,
+  &-disabled:hover,
+  &-disabled:active {
+    color: @button-color;
+    background-color: @button-bg-color;
+    cursor: no-drop;
+    opacity: 0.7;
+  }
+}
