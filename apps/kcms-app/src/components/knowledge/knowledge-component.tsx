@@ -3,7 +3,6 @@ import KnowledgeManagerTable from "./table/knowledge-manager-table";
 import { Heading } from "../common/heading";
 import { data } from "../../demo-data/knowledge-demo";
 import Link from "next/link";
-import { cn } from "../../lib/utils";
 import { buttonVariants } from "../ui/button";
 
 export default function KnowledgeComponent() {
