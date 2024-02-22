@@ -51,7 +51,7 @@ function EmployeeManagerTable({ data }: EmployeeManagerTableProps) {
     getFacetedUniqueValues: getFacetedUniqueValues(),
   });
   const tableFilter: TableFilterProps = {
-    searchColum: "nama",
+    searchColum: "name",
     placeholder: "搜索员工",
   };
 

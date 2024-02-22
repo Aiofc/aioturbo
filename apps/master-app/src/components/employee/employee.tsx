@@ -29,8 +29,8 @@ function Employee() {
     return (
         <div className='space-y-6'>
             <div className='flex items-center justify-between'>
-                <Heading title={"知识库"} description={"知识库管理页面"}/>
-                <Link href={"/knowledge/create"} className={buttonVariants({variant: "default"})}>新增</Link>
+                <Heading title="员工" description={"员工管理页面"}/>
+                <Link href={"/employee/create"} className={buttonVariants({variant: "default"})}>新增</Link>
             </div>
             <EmployeeManagerTable data={data}/>
         </div>

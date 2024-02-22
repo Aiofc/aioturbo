@@ -23,6 +23,11 @@ import {
 } from "../../ui/dialog";
 import { Label } from "../../ui/label";
 import { Input } from "../../ui/input";
+import { toBoolean } from "../../../lib/other.ts";
+import request from "../../../utils/request.ts";
+import { toast } from "../../ui/use-toast.ts";
+
+const confirm_column = "name";
 
 export const columns: ColumnDef<EmployeeTableColumns>[] = [
   {
@@ -79,7 +84,11 @@ export const columns: ColumnDef<EmployeeTableColumns>[] = [
   {
     accessorKey: "active",
     header: ({ column }) => <TableColumnHeader column={column} title="状态" />,
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("active")}</div>,
+    cell: ({ row }) => (
+      <div className="w-[80px]">
+        {toBoolean(row.getValue("active")) ? "在职" : "离职"}
+      </div>
+    ),
     enableSorting: true,
     enableHiding: true,
   },
@@ -89,6 +98,33 @@ export const columns: ColumnDef<EmployeeTableColumns>[] = [
       const router = useRouter();
       const [name, setName] = useState<string | null>(null);
       const [status, setStatus] = useState<boolean>(false);
+      async function deleteRequest(ids: string[]) {
+        const response = await request("/gateway/employee/empolyee/", {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(ids),
+        });
+        if(response.data && response.ok){
+          toast({
+            title: "删除成功",
+            description: "删除成功",
+            variant: "default",
+            duration: 2000
+          });
+          window.location.reload();
+          console.log("刷新页面")
+        }else{
+          toast({
+            title: "删除失败",
+            description: "删除失败,请联系管理员",
+            variant: "destructive",
+            duration: 2000
+          });
+        }
+      }
+
       return (
         <div>
           <Dialog>
@@ -98,9 +134,7 @@ export const columns: ColumnDef<EmployeeTableColumns>[] = [
               </DropdownMenuTrigger>
               <DropdownMenuContent className="border-2 w-20 rounded-lg">
                 <DropdownMenuItem
-                  onClick={() =>
-                    router.push(`/knowledge/${row.getValue("id")}`)
-                  }
+                  onClick={() => router.push(`/employee/${row.getValue("id")}`)}
                 >
                   <div className="text-center w-full">编辑</div>
                 </DropdownMenuItem>
@@ -119,7 +153,7 @@ export const columns: ColumnDef<EmployeeTableColumns>[] = [
                 <DialogDescription>
                   请确认删除{" "}
                   <strong className="text-destructive">
-                    {row.getValue("name")}
+                    {row.getValue(confirm_column)}
                   </strong>{" "}
                   注意相关联的数据，请谨慎操作
                 </DialogDescription>
@@ -128,7 +162,7 @@ export const columns: ColumnDef<EmployeeTableColumns>[] = [
                 <div className="grid grid-cols-4 items-center gap-4">
                   <Label className="text-right">确认名称</Label>
                   <Input
-                    id="name"
+                    id={confirm_column}
                     className="col-span-3"
                     placeholder="请输入名称"
                     onChange={(e) => {
@@ -146,10 +180,10 @@ export const columns: ColumnDef<EmployeeTableColumns>[] = [
                   type="button"
                   variant="destructive"
                   onClick={() => {
-                    if (name !== row.getValue("title")) {
+                    if (name !== row.getValue(confirm_column)) {
                       setStatus(true);
                     } else {
-                      console.log("delete");
+                      deleteRequest([row.getValue("id")])
                     }
                   }}
                 >
