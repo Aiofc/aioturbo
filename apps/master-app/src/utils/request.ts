@@ -14,7 +14,7 @@ async function request(url: string, options: any = {}) {
   const token = Session.getToken();
   if (token) {
     options.headers = options.headers || {};
-    console.log(options.headers)
+    // console.log(options.headers)
     options.headers[CommonHeaderEnum.AUTHORIZATION] = `Bearer ${token}`;
   }
   const tenantId = Session.getTenant();

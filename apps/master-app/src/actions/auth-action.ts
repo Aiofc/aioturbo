@@ -12,15 +12,14 @@ interface LoginData {
 }
 
 interface VerifyReqData {
-    captchaType?: string;
+  captchaType?: string;
 }
 
 interface ReqCheckData {
-    captchaType: string;
-    pointJson: string;
-    token: string;
+  captchaType: string;
+  pointJson: string;
+  token: string;
 }
-
 
 export async function getToken(loginData: LoginData) {
   const params = new URLSearchParams({
@@ -31,23 +30,27 @@ export async function getToken(loginData: LoginData) {
     grant_type: loginData.grant_type,
   }).toString();
   const data = new URLSearchParams({ password: loginData.password }).toString();
-  console.log(params, data);
-
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/oauth2/token?${params}`,
-    {
-      method: "POST",
-      headers: {
-        skipToken: "true",
-        Authorization: "Basic " + btoa(process.env.NEXT_PUBLIC_OAUTH2_PASSWORD_CLIENT as string),
-        "Content-Type": "application/x-www-form-urlencoded",
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/auth/oauth2/token?${params}`,
+      {
+        method: "POST",
+        headers: {
+          skipToken: "true",
+          Authorization:
+            "Basic " +
+            btoa(process.env.NEXT_PUBLIC_OAUTH2_PASSWORD_CLIENT as string),
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: data,
       },
-      body: data,
-    }
-  );
-  const resData = await response.json();
-  console.log(resData);
-  return resData;
+    );
+    const resData = await response.json();
+    console.log(resData);
+    return resData;
+  } catch (e) {
+    return { code: 1, msg: "网络错误，请联系管理员！", data: null, ok: false };
+  }
 }
 
 export async function registerUser(data: SignUpFormType) {
@@ -57,28 +60,34 @@ export async function registerUser(data: SignUpFormType) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
-    }
+    },
   );
   return response.json();
 }
 
-export async function getVerify(verifyReqData: VerifyReqData){
-    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/code/create`, {
-        method: "GET",
-        headers: {
-            contentType: "application/json",
-        },
-    })
-    return response.json();
+export async function getVerify(verifyReqData: VerifyReqData) {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/code/create`,
+    {
+      method: "GET",
+      headers: {
+        contentType: "application/json",
+      },
+    },
+  );
+  return response.json();
 }
 
 export async function verifyCode(reqCheckData: ReqCheckData) {
-    const params = new URLSearchParams({ ...reqCheckData }).toString();
-    const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/code/check?${params}`, {
-        method: "POST",
-        headers: {
-            contentType: "application/json",
-        }
-    })
-    return response.json();
+  const params = new URLSearchParams({ ...reqCheckData }).toString();
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/code/check?${params}`,
+    {
+      method: "POST",
+      headers: {
+        contentType: "application/json",
+      },
+    },
+  );
+  return response.json();
 }

@@ -10,13 +10,8 @@ interface VerifyToken {
   token: string;
 }
 
-interface SlideVerifyProps {
-  login?: () => Promise<void>;
-}
-
-function SlideVerify(slideVerify: SlideVerifyProps) {
-  const { login } = slideVerify;
-  const { setVerification } = verifyStore((state) => state);
+function SlideVerify() {
+  const { setVerification, setVerifyPass } = verifyStore((state) => state);
 
   const verifyTokenRef = useRef<VerifyToken>({} as VerifyToken);
   const bgWidth = 330;
@@ -73,7 +68,7 @@ function SlideVerify(slideVerify: SlideVerifyProps) {
           const response = await verifyCode(verifyData);
           if (response.ok && response.data.repCode === "0000") {
             console.log("验证成功");
-            await login();
+            setVerifyPass(true);
             return Promise.resolve(true);
           } else {
             console.log("验证失败");

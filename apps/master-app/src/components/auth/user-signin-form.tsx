@@ -29,12 +29,13 @@ export default function UserSignInForm() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl");
   const [loading, setLoading] = useState(false);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const defaultValues = {
     username: "admin",
     password: "123456",
   };
 
-  const { captchaVerification } = verifyStore((state) => state);
+  const { captchaVerification, verifyPass, setVerifyPass } = verifyStore((state) => state);
 
   const form = useForm<SignInFormType>({
     resolver: zodResolver(signInFormSchema),
@@ -42,6 +43,7 @@ export default function UserSignInForm() {
   });
 
   const onSubmit = async (formData: SignInFormType) => {
+    setIsDialogOpen(false);
     const singinData = {
       username: formData.username,
       password: encryption(
@@ -61,10 +63,10 @@ export default function UserSignInForm() {
     Session.set("refresh_token", signInData.refresh_token);
     setLoading(false);
     // 判断状态
-    if (signInData?.ok) {
+    if (signInData?.code && !signInData?.ok) {
       toast({
         title: "登录失败",
-        description: signInData.message,
+        description: signInData.msg,
         variant: "destructive",
       });
     } else {
@@ -73,12 +75,21 @@ export default function UserSignInForm() {
         description: "欢迎回来",
         variant: "default",
       });
-      router.push(callbackUrl ? callbackUrl : "/");
+      setTimeout(() => {
+          router.push(callbackUrl ? callbackUrl : "/");
+      }, 500);
     }
   };
 
+    useEffect(() => {
+        if (verifyPass) {
+            onSubmit(form.getValues());
+            setVerifyPass(false);
+        }
+    }, [verifyPass]);
+
   return (
-    <Dialog>
+    <Dialog open={isDialogOpen} onOpenChange={()=>setIsDialogOpen(!isDialogOpen)}>
       <div className="flex flex-col space-y-2 text-center">
         <h1 className="text-2xl font-semibold tracking-tight">用户登录</h1>
         <p className="text-sm text-muted-foreground">请输入您的用户名登录</p>
@@ -122,7 +133,7 @@ export default function UserSignInForm() {
             )}
           />
           <DialogTrigger asChild>
-            <Button disabled={loading} className="ml-auto w-full" type="button">
+            <Button disabled={loading} className="ml-auto w-full" type="button" onClick={()=>setIsDialogOpen(true)}>
               登录
             </Button>
           </DialogTrigger>
@@ -138,7 +149,7 @@ export default function UserSignInForm() {
       </div>
       <GitHubSignInButton />
       <DialogContent className="sm:max-w-md justify-center items-center">
-        <SlideVerify login={() => onSubmit(form.getValues())}/>
+        <SlideVerify />
       </DialogContent>
     </Dialog>
   );
