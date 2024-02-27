@@ -16,12 +16,8 @@ export const menuConfig: MenuConfig = {
       href: '/knowledge',
     },
     {
-      title: '用户管理',
-      href: '/user',
-    },
-    {
-      title: '权限管理',
-      href: '/roles',
+        title: '测试页面',
+        href: '/test',
     }
   ],
   sidebarNav: [
@@ -37,17 +33,7 @@ export const menuConfig: MenuConfig = {
           title: '知识库管理',
           href: '/knowledge',
           items: [],
-        },
-        {
-          title: '用户管理',
-          href: '/user',
-          items: [],
-        },
-        {
-          title: '权限管理',
-          href: '/roles',
-          items: [],
-        },
+        }
       ],
     },
   ],

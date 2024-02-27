@@ -12,10 +12,10 @@ import {
   ColumnFiltersState,
   SortingState,
 } from "@tanstack/react-table";
-import { TableCore } from "../../common/TableCore";
-import { KnowledgeManageTableColumns, TableFilterProps } from "../../../types";
-import { columns } from "./knowledgeTableColumn";
-import { TableToolbar } from "../../common/TableToolbar";
+import { TableCore } from "../../common/views/TableCore.tsx";
+import {FacetedFilter, KnowledgeManageTableColumns, TableFilterProps} from "../../../types";
+import { columns } from "./knowledge-table-column.tsx";
+import { TableToolbar } from "../../common/views/TableToolbar.tsx";
 import { Separator } from "../../ui/separator";
 import { Button } from "../../ui/button";
 import { ScrollArea, ScrollBar } from "../../ui/scroll-area";
@@ -53,7 +53,7 @@ export default function KnowledgeManagerTable({
     getFacetedUniqueValues: getFacetedUniqueValues(),
   });
   const tableFilter: TableFilterProps = {
-    searchColum: "title",
+    searchColum: "name",
     placeholder: "搜索知识库",
   };
 
@@ -64,6 +64,7 @@ export default function KnowledgeManagerTable({
         className='mb-2 mt-2'
         table={table}
         tableFilter={tableFilter}
+        create="/knowledge/create"
       />
       <ScrollArea className='rounded-md border h-[50vh]'>
         <TableCore table={table} columns={columns}/>
@@ -71,7 +72,7 @@ export default function KnowledgeManagerTable({
       </ScrollArea>
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredSelectedRowModel().rows.length} of{' '}
+          {table.getFilteredSelectedRowModel().rows.length} of {' '}
           {table.getFilteredRowModel().rows.length} 条被选择.
         </div>
         <div className="space-x-2">

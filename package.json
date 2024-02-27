@@ -45,5 +45,8 @@
   "dependencies": {
     "tailwindcss": "^3.4.1",
     "tailwindcss-animate": "^1.0.7"
+  },
+  "volta": {
+    "node": "21.6.1"
   }
 }

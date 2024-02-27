@@ -10,8 +10,8 @@ import {
   DropdownMenuContent,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-} from '../ui/dropdown-menu';
-import { Button } from '../ui/button';
+} from '../../ui/dropdown-menu.tsx';
+import { Button } from '../../ui/button.tsx';
 
 interface UserTableViewOptionsProps<TData> {
   table: Table<TData>;

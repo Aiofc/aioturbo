@@ -3,42 +3,128 @@ import { KnowledgeManageTableColumns } from "../types";
 export const data: KnowledgeManageTableColumns[] = [
   {
     id: "1",
-    title: "测试知识库",
-    category: "test",
-    status: "publish",
-    created: "2024-12-12",
-    updated: "2024-12-12",
+    name: "测试知识库",
+    description: "test",
+    active: true
   },
   {
     id: "2",
-    title: "医疗知识库",
-    category: "test",
-    status: "publish",
-    created: "2024-12-12",
-    updated: "2024-12-12",
+    name: "医疗知识库",
+    description: "test",
+    active: true
   },
   {
     id: "3",
-    title: "企业知识库",
-    category: "test",
-    status: "publish",
-    created: "2024-12-12",
-    updated: "2024-12-12",
+    name: "企业知识库",
+    description: "test",
+    active: true
   },
   {
     id: "4",
-    title: "开发知识库",
-    category: "test",
-    status: "publish",
-    created: "2024-12-12",
-    updated: "2024-12-12",
+    name: "开发知识库",
+    description: "test",
+    active: true
   },
   {
     id: "5",
-    title: "测试",
-    category: "test",
-    status: "publish",
-    created: "2024-12-12",
-    updated: "2024-12-12",
+    name: "测试",
+    description: "test",
+    active: true
   },
+  {
+    id: "6",
+    name: "测试知识库",
+    description: "test",
+    active: true
+  },
+  {
+    id: "7",
+    name: "医疗知识库",
+    description: "test",
+    active: true
+  },
+  {
+    id: "8",
+    name: "企业知识库",
+    description: "test",
+    active: true
+  },
+  {
+    id: "9",
+    name: "开发知识库",
+    description: "test",
+    active: true
+  },
+  {
+    id: "10",
+    name: "测试",
+    description: "test",
+    active: true
+  },
+  {
+    id: "11",
+    name: "测试知识库",
+    description: "test",
+    active: true
+  },
+  {
+    id: "12",
+    name: "医疗知识库",
+    description: "test",
+    active: true
+  },
+  {
+    id: "13",
+    name: "企业知识库",
+    description: "test",
+    active: true
+  },
+  {
+    id: "14",
+    name: "开发知识库",
+    description: "test",
+    active: true
+  },
+  {
+    id: "15",
+    name: "测试",
+    description: "test",
+    active: true
+  },
+  {
+    id: "16",
+    name: "测试知识库",
+    description: "test",
+    active: true
+  },
+  {
+    id: "17",
+    name: "医疗知识库",
+    description: "test",
+    active: true
+  },
+  {
+    id: "18",
+    name: "企业知识库",
+    description: "test",
+    active: true
+  },
+  {
+    id: "19",
+    name: "开发知识库",
+    description: "test",
+    active: true
+  },
+  {
+    id: "20",
+    name: "测试",
+    description: "test",
+    active: true
+  },
+  {
+    id: "21",
+    name: "测试知识库",
+    description: "test",
+    active: true
+  }
 ];

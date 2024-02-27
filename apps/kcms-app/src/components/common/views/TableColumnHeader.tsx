@@ -11,9 +11,9 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '../ui/dropdown-menu';
-import { Button } from '../ui/button';
-import { cn } from '../../lib/utils';
+} from '../../ui/dropdown-menu.tsx';
+import { Button } from '../../ui/button.tsx';
+import { cn } from '../../../lib/utils.ts';
 import { HTMLAttributes } from 'react';
 
 interface DataTableColumnHeaderProps<TData, TValue>

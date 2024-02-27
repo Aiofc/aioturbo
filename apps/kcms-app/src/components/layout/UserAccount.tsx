@@ -10,7 +10,6 @@ import {
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { signOut } from 'next-auth/react';
 
 export function UserAccount() {
 
@@ -44,7 +43,7 @@ export function UserAccount() {
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={()=>signOut()}>
+            <DropdownMenuItem>
               退出登录
               <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
             </DropdownMenuItem>

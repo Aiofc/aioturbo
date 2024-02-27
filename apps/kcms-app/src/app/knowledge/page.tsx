@@ -1,8 +1,8 @@
 import React from "react";
 import KnowledgeComponent from "../../components/knowledge/knowledge-component";
-import BreadCrumb from "../../components/common/breadcrumb";
+import BreadCrumb from "../../components/common/page/breadcrumb.tsx";
 
-const breadcrumbItems = [{ title: 'Knowledge', link: '/knowledge' }];
+const breadcrumbItems = [{ title: '知识库', link: '/knowledge' }];
 
 export default function KnowledgePage() {
   return (

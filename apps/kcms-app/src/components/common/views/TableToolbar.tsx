@@ -2,12 +2,12 @@
 
 import { Cross2Icon } from '@radix-ui/react-icons';
 import { Table } from '@tanstack/react-table';
-import { Button } from '../ui/button';
-import { Input } from '../ui/input';
-import { TableFacetedFilter } from './TableFacetedFilter';
-import { TableViewOptions } from './TableViewOptions';
+import { Button } from '../../ui/button.tsx';
+import { Input } from '../../ui/input.tsx';
+import { TableFacetedFilter } from './TableFacetedFilter.tsx';
+import { TableViewOptions } from './TableViewOptions.tsx';
 import { useRouter } from 'next/navigation';
-import { FacetedFilter, TableFilterProps } from '../../types';
+import { FacetedFilter, TableFilterProps } from '../../../types';
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
@@ -44,7 +44,7 @@ export function TableToolbar<TData>({
             onChange={(event) =>
               table.getColumn(tableFilter.searchColum)?.setFilterValue(event.target.value)
             }
-            className="h-8 w-[150px] lg:w-[250px]"
+            className="h-8 w-36 lg:w-72"
           />
         ) : (
           <div />

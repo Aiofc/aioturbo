@@ -10,12 +10,12 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator
-} from '../ui/command';
-import { Badge } from '../ui/badge';
-import { Button } from '../ui/button';
-import { cn } from '../../lib/utils';
-import { Separator } from '../ui/separator';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+} from '../../ui/command.tsx';
+import { Badge } from '../../ui/badge.tsx';
+import { Button } from '../../ui/button.tsx';
+import { cn } from '../../../lib/utils.ts';
+import { Separator } from '../../ui/separator.tsx';
+import { Popover, PopoverContent, PopoverTrigger } from '../../ui/popover.tsx';
 
 interface DataTableFacetedFilterProps<TData, TValue> {
   column?: Column<TData, TValue>;
@@ -130,7 +130,7 @@ export function TableFacetedFilter<TData, TValue>({
                     onSelect={() => column?.setFilterValue(undefined)}
                     className="justify-center text-center"
                   >
-                    Clear filters
+                    清除勾选
                   </CommandItem>
                 </CommandGroup>
               </>

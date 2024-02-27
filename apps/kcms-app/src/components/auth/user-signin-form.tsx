@@ -13,9 +13,7 @@ import { Input } from "../ui/input";
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import GitHubSignInButton from './github-auth-button';
-import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import {encryptA256GCM} from "../../lib/symmetric-encryption";
 import { SignInFormType, signInFormSchema } from '../../types/index';
 
 export default function UserSignInForm() {
@@ -36,19 +34,19 @@ export default function UserSignInForm() {
   const onSubmit = async (data: SignInFormType) => {
     setLoading(true);
     // 登录请求
-    const signInData = await signIn('credentials', {
-      email: data.email,
-      password: encryptA256GCM(data.password),
-      redirect: false,
-    });
+    // const signInData = await signIn('credentials', {
+    //   email: data.email,
+    //   password: encryptA256GCM(data.password),
+    //   redirect: false,
+    // });
     setLoading(false);
     // 判断状态
-    if (signInData?.error) {
-      console.log('登录失败', signInData.error);
-    } else if (signInData?.ok && signInData.status === 200) {
-        console.log('登录成功', signInData)
-      router.push(callbackUrl? callbackUrl : '/dashboard')
-    }
+    // if (signInData?.error) {
+    //   console.log('登录失败', signInData.error);
+    // } else if (signInData?.ok && signInData.status === 200) {
+    //     console.log('登录成功', signInData)
+    //   router.push(callbackUrl? callbackUrl : '/dashboard')
+    // }
   };
 
   return (

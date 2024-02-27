@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import Link from 'next/link';
 import { ChevronRightIcon } from '@radix-ui/react-icons';
-import { cn } from '../../lib/utils';
+import { cn } from '../../../lib/utils.ts';
 
 type BreadCrumbType = {
   title: string;
@@ -19,7 +19,7 @@ export default function BreadCrumb({ items }: BreadCrumbPropsType) {
         href={'/'}
         className="overflow-hidden text-ellipsis whitespace-nowrap"
       >
-        Home
+        主页
       </Link>
       {items?.map((item: BreadCrumbType, index: number) => (
         <Fragment key={item.title}>

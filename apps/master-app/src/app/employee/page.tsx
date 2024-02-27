@@ -2,7 +2,7 @@ import React from 'react';
 import Employee from "../../components/employee/employee.tsx";
 import BreadCrumb from "../../components/common/breadcrumb.tsx";
 
-const breadcrumbItems = [{ title: 'employee', link: '/employee' }];
+const breadcrumbItems = [{ title: '员工', link: '/employee' }];
 
 function EmployeePage() {
     return (

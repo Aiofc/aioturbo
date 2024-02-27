@@ -19,7 +19,7 @@ export default function BreadCrumb({ items }: BreadCrumbPropsType) {
         href={'/'}
         className="overflow-hidden text-ellipsis whitespace-nowrap"
       >
-        Home
+        主页
       </Link>
       {items?.map((item: BreadCrumbType, index: number) => (
         <Fragment key={item.title}>

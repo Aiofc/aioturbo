@@ -19,8 +19,8 @@ export function RootHeader() {
     return <></>
   }
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 items-center">
+    <header className=" sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="mr-10 ml-10 flex h-14 items-center">
         {/*菜单自适应组件*/}
         <MainNav />
         <MobileNav />

@@ -1,19 +1,38 @@
+'use client';
 import React from "react";
 import KnowledgeManagerTable from "./table/knowledge-manager-table";
-import { Heading } from "../common/heading";
+import { Heading } from "../common/page/heading.tsx";
 import { data } from "../../demo-data/knowledge-demo";
-import Link from "next/link";
-import { buttonVariants } from "../ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs.tsx";
+import KanbanView from "../common/views/KanbanView.tsx";
+import {useRouter} from "next/navigation";
 
 export default function KnowledgeComponent() {
+    const router = useRouter();
+    const handleClick = (data: any) => {
+        router.push(`/knowledge/zettle?knowledge_id=${data.id}`);
+    };
 
-  return (
-    <div className='space-y-6'>
-      <div className='flex items-center justify-between'>
-        <Heading title={"知识库"} description={"知识库管理页面"} />
-        <Link href={"/knowledge/create"} className={buttonVariants({ variant: "default" })}>新增</Link>
-      </div>
-      <KnowledgeManagerTable data={data} />
-    </div>
+    const operateBar = {
+        create: "/knowledge/create",
+        placeholder: "搜索知识库",
+    }
+
+    return (
+        <Tabs defaultValue="kanban">
+            <div className="flex items-center justify-between">
+                <Heading title={"知识库"} description={"知识库管理页面"} />
+                <TabsList className="grid grid-cols-2">
+                  <TabsTrigger value="kanban">看板</TabsTrigger>
+                  <TabsTrigger value="table">列表</TabsTrigger>
+                </TabsList>
+            </div>
+            <TabsContent value="kanban" className="w-full">
+                <KanbanView dataList={data} editLink="/knowledge/" operateBar={operateBar} onClick={handleClick} />
+            </TabsContent>
+            <TabsContent value="table"  className="w-full">
+                <KnowledgeManagerTable data={data} />
+            </TabsContent>
+        </Tabs>
   );
 }

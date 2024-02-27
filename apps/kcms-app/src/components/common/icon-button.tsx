@@ -17,6 +17,7 @@ interface IconButtonProps {
   icon?: React.ReactNode;
   children?: React.ReactNode;
   onClick?: () => void;
+  className?: string;
 }
 
 export default function IconButton({
@@ -24,15 +25,17 @@ export default function IconButton({
   variant,
   children,
   onClick,
+  className,
 }: IconButtonProps) {
   return (
     <Button
-      className='mr-1 w-full items-start'
+      className={`mr-1 w-full items-start ${className}`}
       variant={variant ? variant : "ghost"}
       onClick={onClick}
     >
-      <div className='w-full space-x-2 flex items-center'>
-        {icon ? icon : <></>} <div>{children}</div>
+      <div className="w-full space-x-2 flex items-center">
+        {icon ? icon : <></>}
+        {children ? <div>{children}</div> : null}
       </div>
     </Button>
   );
