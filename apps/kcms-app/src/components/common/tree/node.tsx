@@ -2,22 +2,17 @@ import {AiFillFolder, AiFillFile} from "react-icons/ai";
 import {MdArrowRight, MdArrowDropDown, MdEdit} from "react-icons/md";
 import {RxCross2} from "react-icons/rx";
 import {Input} from "../../ui/input.tsx";
+import {NodeRendererProps} from "react-arborist";
+import {TreeData} from "../../../types";
 
-interface NodeProps {
-    node: any;
-    style: any;
-    dragHandle?: any;
-    tree: any;
-}
-
-const Node = ({node, style, dragHandle, tree}: NodeProps) => {
+const Node = ({node, style, dragHandle, tree}: NodeRendererProps<TreeData>) => {
     const CustomIcon = node.data.icon;
     const iconColor = node.data.iconColor;
 
     // console.log(node, tree);
     return (
         <div
-            className={`flex h-full items-center w-full ${node.state.isSelected ? "isSelected" : ""}`}
+            className={`flex h-full items-center w-full ${node.state.isSelected ? "bg-gray-300 text-white rounded-none" : ""}`}
             style={style}
             ref={dragHandle}
         >
@@ -61,7 +56,7 @@ const Node = ({node, style, dragHandle, tree}: NodeProps) => {
                             type="text"
                             defaultValue={node.data.name}
                             onFocus={(e) => e.currentTarget.select()}
-                            onBlur={() => node.reset()}
+                            // onBlur={() => node.reset()}
                             onKeyDown={(e) => {
                               if (e.key === "Escape") node.reset();
                               if (e.key === "Enter") node.submit(e.currentTarget.value);

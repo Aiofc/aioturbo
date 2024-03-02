@@ -1,20 +1,29 @@
+import {ComponentType} from "react";
+
 export interface BizTreeData {
     id: string;
-    name: string;
+    title: string;
     description: string | null;
-    parentId: string | null;
+    pid: string | null;
     active: boolean;
 }
 
 export type BizTreeDataList = BizTreeData[];
 
+interface iconProps {
+    color?: any
+}
+
 export interface TreeData {
+    icon?: ComponentType<iconProps>;
+    iconColor?: string;
     id: string;
     name: string;
+    title: string;
     description: string | null;
     children?: TreeData[];
     active: boolean;
-    parentId: string | null;
+    pid: string | null;
 }
 
 export type TreeDataList = TreeData[];

@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { SimpleTree } from "./simple-tree";
+import { ControlTree } from "./control-tree.ts";
 import {
     CreateHandler,
     DeleteHandler,
@@ -7,19 +7,19 @@ import {
     RenameHandler,
 } from "react-arborist";
 
-export type SimpleTreeData = {
+export type ControlTreeData = {
     id: string;
     name: string;
-    children?: SimpleTreeData[];
+    children?: ControlTreeData[];
 };
 
 let nextId = 0;
 
-export function useSimpleTree<T>(initialData: readonly T[]) {
+export function useControlTree<T>(initialData: readonly T[]) {
     const [data, setData] = useState(initialData);
     const tree = useMemo(
         () =>
-            new SimpleTree<// @ts-ignore
+            new ControlTree<// @ts-ignore
                 T>(data),
         [data]
     );
@@ -41,7 +41,7 @@ export function useSimpleTree<T>(initialData: readonly T[]) {
     };
 
     const onCreate: CreateHandler<T> = ({ parentId, index, type }) => {
-        const data = { id: `simple-tree-id-${nextId++}`, name: "" } as any;
+        const data = { id: `control-tree-id-${nextId++}`, name: "" } as any;
         if (type === "internal") data.children = [];
         tree.create({ parentId, index, data });
         setData(tree.data);

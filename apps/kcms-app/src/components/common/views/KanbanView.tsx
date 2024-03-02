@@ -70,6 +70,7 @@ function KanbanView({
     const [dataList, setDataList] = React.useState(initDataList);
     const [change, setChange] = React.useState<string>();
 
+    console.log("数据", dataList)
     function findObjectByName(data: any[], key: string, value: any) {
         return data.filter((item) =>
             item[key].toLowerCase().includes(value.toLowerCase()),
@@ -133,10 +134,9 @@ function KanbanView({
                                             </p>
                                         </CardContent>
                                         <CardFooter>
-                                            <p>
-                                                {/*{data.active ? <Badge variant="default">启用</Badge> :*/}
-                                                {/*    <Badge variant="destructive">禁用</Badge>}*/}
-                                            </p>
+                                            <div>
+                                                {data.active ? (<Badge variant="default">启用</Badge>) : (<Badge variant="destructive">禁用</Badge>)}
+                                            </div>
                                         </CardFooter>
                                     </Card>
                                 </div>

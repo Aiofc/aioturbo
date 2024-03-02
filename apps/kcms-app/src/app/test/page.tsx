@@ -13,25 +13,9 @@ import {BizTreeData} from "../../types";
 
 export default function TestPage() {
 
-    function dealData(data: any) {
-        let result: any[] = [];
-        data.forEach((item: any) => {
-            let newItem = {
-                id: item.id,
-                title: item.name,
-                description: item.description,
-            };
 
-            result.push(newItem);
 
-            if (item.subCategories && item.subCategories.length > 0) {
-                result = result.concat(dealData(item.subCategories));
-            }
-        });
-        return result;
-    }
-
-    const operat = {
+    const operate = {
         searchKey: "title",
     }
 
@@ -41,8 +25,8 @@ export default function TestPage() {
                 <EditTree treeData={sourceData}/>
             </div>
             <div className="ml-4 mt-3">
-                <KanbanView initDataList={dealData(sourceData)} title={"title"} onClick={() => null}
-                            operateBar={operat}/>
+                <KanbanView initDataList={sourceData} title={"title"} onClick={() => null}
+                            operateBar={operate}/>
             </div>
         </div>
 

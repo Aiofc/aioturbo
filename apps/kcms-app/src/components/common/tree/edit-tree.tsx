@@ -2,12 +2,13 @@ import React, {useEffect, useRef, useState} from 'react';
 import {NodeApi, Tree} from "react-arborist";
 import {TbFolderPlus} from "react-icons/tb";
 import {AiOutlineFileAdd} from "react-icons/ai";
-import {BizDataToTreeData, TreeDataToBizData} from "../../../utils/other.ts";
+import {BizDataToTreeData} from "../../../utils/other.ts";
 import Node from "./node.tsx";
 import {Input} from "../../ui/input.tsx";
 import {Button} from "../../ui/button.tsx";
 import {BizTreeDataList, TreeData} from "../../../types";
-import {useSimpleTree} from "./hook/use-simple-tree.ts";
+import {useControlTree} from "./hook/use-control-tree.ts";
+import {MdOutlineSaveAs} from "react-icons/md";
 
 interface EditTreePProps {
     treeData: BizTreeDataList;
@@ -30,25 +31,30 @@ function EditTree({
                   }: EditTreePProps) {
     const [term, setTerm] = useState("");
     const treeRef = useRef(null);
-    const [data, controller] = useSimpleTree(BizDataToTreeData(treeData));
+    const [data, controller] = useControlTree(BizDataToTreeData(treeData));
 
     useEffect(() => {
         console.log("data", data);
     }, [data]);
 
     function onRename({name, id, node}: RenameHandler) {
+        node.data.title = name;
         controller.onRename({name, id, node})
-        if (id.includes("simple-tree-id-"))
-            console.log("创建", name, id);
+        if (id.includes("control-tree-id-")) {
+
+            console.log("创建", name, node.data.title);
+        }
         // 请求后端创建值
-        else console.log("重命名", name, id);
+        else{
+            console.log("修改", name, node);
+        }
         // 请求后端修改值
     }
 
     function onMove({dragIds, parentId, index, dragNodes, parentNode}: MoveHandler) {
         controller.onMove({dragIds, parentId, index, dragNodes, parentNode});
         dragNodes.forEach((node) => {
-            node.data.parentId = parentId;
+            node.data.pid = parentId;
         })
         // 请求后端修改值
     }
@@ -73,8 +79,14 @@ function EditTree({
             <Button
                 variant="link"
                 // @ts-ignore
-                onClick={() => treeRef.current.createLeaf()} title="New File...">
+                onClick={() => treeRef.current.createLeaf()} title="新建">
                 <AiOutlineFileAdd/>
+            </Button>
+            <Button
+                variant="link"
+                // @ts-ignore
+                onClick={() => null } title="保存">
+                <MdOutlineSaveAs />
             </Button>
         </div>
     );

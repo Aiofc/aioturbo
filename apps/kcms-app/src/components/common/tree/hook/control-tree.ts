@@ -1,7 +1,7 @@
-type SimpleData = { id: string; name: string; children?: SimpleData[] };
+type ControlData = { id: string; name: string; children?: ControlData[] };
 
-export class SimpleTree<T extends SimpleData> {
-    root: SimpleNode<T>;
+export class ControlTree<T extends ControlData> {
+    root: ControlNode<T>;
     constructor(data: T[]) {
         this.root = createRoot<T>(data);
     }
@@ -34,9 +34,9 @@ export class SimpleTree<T extends SimpleData> {
         if (node) node.drop();
     }
 
-    find(id: string, node: SimpleNode<T> = this.root): SimpleNode<T> | null {
+    find(id: string, node: ControlNode<T> = this.root): ControlNode<T> | null {
         if (!node) return null;
-        if (node.id === id) return node as SimpleNode<T>;
+        if (node.id === id) return node as ControlNode<T>;
         if (node.children) {
             for (let child of node.children) {
                 const found = this.find(id, child);
@@ -48,27 +48,27 @@ export class SimpleTree<T extends SimpleData> {
     }
 }
 
-function createRoot<T extends SimpleData>(data: T[]) {
-    const root = new SimpleNode<T>({ id: "ROOT" } as T, null);
+function createRoot<T extends ControlData>(data: T[]) {
+    const root = new ControlNode<T>({ id: "ROOT" } as T, null);
     root.children = data.map((d) => createNode(d as T, root));
     return root;
 }
 
-function createNode<T extends SimpleData>(data: T, parent: SimpleNode<T>) {
-    const node = new SimpleNode<T>(data, parent);
+function createNode<T extends ControlData>(data: T, parent: ControlNode<T>) {
+    const node = new ControlNode<T>(data, parent);
     if (data.children)
         node.children = data.children.map((d) => createNode<T>(d as T, node));
     return node;
 }
 
-class SimpleNode<T extends SimpleData> {
+class ControlNode<T extends ControlData> {
     id: string;
-    children?: SimpleNode<T>[];
-    constructor(public data: T, public parent: SimpleNode<T> | null) {
+    children?: ControlNode<T>[];
+    constructor(public data: T, public parent: ControlNode<T> | null) {
         this.id = data.id;
     }
 
-    hasParent(): this is this & { parent: SimpleNode<T> } {
+    hasParent(): this is this & { parent: ControlNode<T> } {
         return !!this.parent;
     }
 

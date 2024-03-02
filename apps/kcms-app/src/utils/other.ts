@@ -38,16 +38,16 @@ export function BizDataToTreeData(dataList: BizTreeDataList): TreeDataList {
 
     // Step 2: Store each item in the map
     dataList.forEach(item => {
-        map[item.id] = {...item, children: []};
+        map[item.id] = {...item, name: item.title, children: []};
     });
 
     let roots: TreeDataList = [];
 
     // Step 3: Build the tree structure
     dataList.forEach((item: BizTreeData) => {
-        if (item.parentId && map[item.parentId]) {
+        if (item.pid && map[item.pid]) {
             // @ts-ignore
-            map[item.parentId].children.push(map[item.id]);
+            map[item.pid].children.push(map[item.id]);
         } else {
             roots.push(map[item.id]);
         }
@@ -75,9 +75,9 @@ export function TreeDataToBizData(dataList: TreeDataList): BizTreeDataList {
     }, id?: string) {
         let bizItem: BizTreeData = {
             id: item.id,
-            name: item.name,
+            title: item.name,
             description: item.description,
-            parentId: null, // This will be set when calling flatten for each child
+            pid: null, // This will be set when calling flatten for each child
             active: item.active
         };
 
