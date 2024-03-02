@@ -1,16 +1,14 @@
 'use client';
-import React, {ReactNode} from 'react';
+import React, {ReactElement} from 'react';
 import {Separator} from "../../ui/separator.tsx";
 import {Button} from "../../ui/button.tsx";
 import {Input} from "../../ui/input.tsx";
 import {useRouter} from "next/navigation";
-import {Simulate} from "react-dom/test-utils";
-import change = Simulate.change;
 
 interface OperateBarProps {
     create?: string;
     placeholder?: string;
-    options?: () => ReactNode;
+    options?: () => ReactElement;
     change?: string;
     onChange?: (value: string) => void;
 }
@@ -41,9 +39,9 @@ function OperateBar({
                     className="w-36 lg:w-72 h-[32px] "
                     placeholder={placeholder ? placeholder : "搜索"}
                     value={change? change : ""}
-                    onChange={(e) => onChange ? onChange(e.target.value) : null}
+                    onChange={(e) => onChange?.(e.target.value)}
                 />
-                {options ? options() : null}
+                {options?.()}
             </div>
         </div>
     );

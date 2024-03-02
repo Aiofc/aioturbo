@@ -32,10 +32,7 @@ function EditTree({
     const [term, setTerm] = useState("");
     const treeRef = useRef(null);
     const [data, controller] = useControlTree(BizDataToTreeData(treeData));
-
-    useEffect(() => {
-        console.log("data", data);
-    }, [data]);
+    const [save, setSave] = useState<string | null>(null);
 
     function onRename({name, id, node}: RenameHandler) {
         node.data.title = name;
@@ -85,7 +82,7 @@ function EditTree({
             <Button
                 variant="link"
                 // @ts-ignore
-                onClick={() => null } title="保存">
+                onClick={() => setSave(true) } title="保存">
                 <MdOutlineSaveAs />
             </Button>
         </div>
@@ -119,7 +116,7 @@ function EditTree({
                 onMove={onMove}
                 onDelete={onDelete}
             >
-                {Node}
+                {(node) => <Node {...node} save={save} setSave={setSave}/>}
             </Tree>
         </div>
     );

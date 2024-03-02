@@ -4,12 +4,26 @@ import {RxCross2} from "react-icons/rx";
 import {Input} from "../../ui/input.tsx";
 import {NodeRendererProps} from "react-arborist";
 import {TreeData} from "../../../types";
+import {useEffect, useRef, useState} from "react";
 
-const Node = ({node, style, dragHandle, tree}: NodeRendererProps<TreeData>) => {
+type NodeComponentProps = NodeRendererProps<TreeData> & {
+    setSave?: (data: boolean) => void;
+    save?: boolean;
+}
+
+const Node = ({node, style, dragHandle, tree, setSave, save}: NodeComponentProps) => {
     const CustomIcon = node.data.icon;
     const iconColor = node.data.iconColor;
+    const [inputValue, setInputValue] = useState(node.data.name);
 
-    // console.log(node, tree);
+    useEffect(() => {
+        if (node.isEditing) console.log(inputValue);
+        if (!!save && node.isEditing) {
+            console.log(inputValue);
+            setSave?.(false);
+        }
+    }, [save, node.isEditing, setSave, inputValue]);
+
     return (
         <div
             className={`flex h-full items-center w-full ${node.state.isSelected ? "bg-gray-300 text-white rounded-none" : ""}`}
@@ -54,12 +68,13 @@ const Node = ({node, style, dragHandle, tree}: NodeRendererProps<TreeData>) => {
                         <Input
                             className="w-full h-6 border-1 rounded-md px-1.5 focus:outline-none focus:border-blue-500"
                             type="text"
-                            defaultValue={node.data.name}
+                            value={inputValue}
+                            onChange={(e) => setInputValue(e.target.value)}
                             onFocus={(e) => e.currentTarget.select()}
                             // onBlur={() => node.reset()}
                             onKeyDown={(e) => {
                               if (e.key === "Escape") node.reset();
-                              if (e.key === "Enter") node.submit(e.currentTarget.value);
+                              // if (e.key === "Enter") node.submit(e.currentTarget.value);
                             }}
                             autoFocus
                         />

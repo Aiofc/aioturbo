@@ -70,7 +70,6 @@ function KanbanView({
     const [dataList, setDataList] = React.useState(initDataList);
     const [change, setChange] = React.useState<string>();
 
-    console.log("数据", dataList)
     function findObjectByName(data: any[], key: string, value: any) {
         return data.filter((item) =>
             item[key].toLowerCase().includes(value.toLowerCase()),
@@ -81,11 +80,15 @@ function KanbanView({
         if (change === "" || change === undefined) {
             setDataList(initDataList);
         } else {
-            operateBar?.searchKey
-                ? setDataList(
-                    findObjectByName(initDataList, operateBar?.searchKey, change),
-                )
-                : null;
+            if (operateBar && operateBar.searchKey) {
+                setDataList(
+                    findObjectByName(initDataList, operateBar.searchKey, change),
+                );
+            } else {
+                // operateBar 或 operateBar.searchKey 不存在，可以选择跳过调用 findObjectByName 函数
+                // 或者给它们提供一个默认值
+                console.log('operateBar 或 operateBar.searchKey 不存在');
+            }
         }
     }, [change]);
 

@@ -14,7 +14,7 @@ interface iconProps {
     color?: any
 }
 
-export interface TreeData {
+export type TreeData = {
     icon?: ComponentType<iconProps>;
     iconColor?: string;
     id: string;
