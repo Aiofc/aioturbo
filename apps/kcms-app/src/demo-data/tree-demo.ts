@@ -1,135 +1,58 @@
-import { ComponentType } from "react";
-import * as icons from "react-icons/md";
-
-export type GmailItem = {
-    id: string;
-    name: string;
-    icon: ComponentType;
-    unread?: number;
-    readOnly: boolean;
-    children?: GmailItem[];
-};
-
-export const gmailData: GmailItem[] = [
+export const sourceData = [
     {
-        id: "1",
-        name: "Inbox",
-        unread: 1,
-        readOnly: true,
-        icon: icons.MdInbox,
+        "id": "1762487090777456642",
+        "name": "接极千元明率",
+        "parentId": "1762343870760267778",
+        "description": "部具知三斗习很必者该周在解。着次不使温党于段计多局量专等。离两何除应地装事你始人但状切量术切。单组改七张酸况极采斯东术须六取。",
+        "active": true
     },
     {
-        id: "2",
-        name: "Starred",
-        unread: 0,
-        readOnly: true,
-        icon: icons.MdStarOutline,
+        "id": "1762493665202151426",
+        "name": "Category 2",
+        "parentId": "1762487090777456642",
+        "description": "Description of Category 2",
+        "active": false
     },
     {
-        id: "3",
-        name: "Snoozed",
-        unread: 0,
-        readOnly: true,
-        icon: icons.MdAccessTime,
+        "id": "1762493901622484993",
+        "name": "Category 3",
+        "parentId": null,
+        "description": "Description of Category 3",
+        "active": true
     },
     {
-        id: "4",
-        name: "Sent",
-        unread: 0,
-        readOnly: true,
-        icon: icons.MdSend,
+        "id": "1762493665151819777",
+        "name": "分类2",
+        "parentId": "1762487090777456642",
+        "description": "2222",
+        "active": true
     },
     {
-        id: "5",
-        name: "Drafts",
-        unread: 14,
-        readOnly: true,
-        icon: icons.MdOutlineDrafts,
+        "id": "1762343870760267778",
+        "name": "分类一",
+        "parentId": null,
+        "description": "修改第一条数据",
+        "active": true
     },
     {
-        id: "6",
-        name: "Spam",
-        unread: 54,
-        readOnly: true,
-        icon: icons.MdOutlineReportGmailerrorred,
+        "id": "1762487142648414210",
+        "name": "分类二",
+        "parentId": null,
+        "description": "分类二描述",
+        "active": true
     },
     {
-        id: "7",
-        name: "Important",
-        unread: 0,
-        readOnly: true,
-        icon: icons.MdLabelImportantOutline,
+        "id": "1763816686399614978",
+        "name": "分类一",
+        "parentId": "1762487142648414210",
+        "description": "修改分类描述",
+        "active": true
     },
     {
-        id: "8",
-        name: "Chats",
-        unread: 0,
-        readOnly: true,
-        icon: icons.MdOutlineChat,
-    },
-    {
-        id: "9",
-        name: "Scheduled",
-        unread: 0,
-        readOnly: true,
-        icon: icons.MdOutlineScheduleSend,
-    },
-    {
-        id: "10",
-        name: "All Mail",
-        unread: 0,
-        readOnly: true,
-        icon: icons.MdOutlineMail,
-    },
-    {
-        id: "11",
-        name: "Trash",
-        unread: 0,
-        readOnly: true,
-        icon: icons.MdOutlineDelete,
-    },
-    {
-        id: "12",
-        name: "Categories",
-        icon: icons.MdOutlineLabel,
-        readOnly: true,
-        children: [
-            {
-                id: "13",
-                name: "Social",
-                unread: 946,
-                readOnly: false,
-                icon: icons.MdPeopleOutline,
-            },
-            {
-                id: "14",
-                name: "Updates",
-                unread: 4580,
-                readOnly: false,
-                icon: icons.MdOutlineInfo,
-            },
-            {
-                id: "15",
-                name: "Forums",
-                unread: 312,
-                readOnly: false,
-                icon: icons.MdChatBubbleOutline,
-                children: [
-                    {
-                        id: "15-1",
-                        name: "Github",
-                        readOnly: false,
-                        icon: icons.MdSocialDistance,
-                    },
-                ],
-            },
-            {
-                id: "16",
-                name: "Promotions",
-                unread: 312,
-                readOnly: false,
-                icon: icons.MdOutlineLocalOffer,
-            },
-        ],
-    },
-];
+        "id": "1762487142648414222",
+        "name": "分类二",
+        "parentId": "1762487142648414210",
+        "description": "分类二描述",
+        "active": true
+    }
+]

@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import {useRouter, useSearchParams} from "next/navigation";
-import { Heading } from "../common/page/heading.tsx";
+import {Heading} from "../common/page/heading.tsx";
 import {zettleDemoList} from "../../demo-data/zettle-demo.ts";
 import KanbanView from "../common/views/KanbanView.tsx";
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "../ui/tabs.tsx";
@@ -13,29 +13,32 @@ function Zettlekasten() {
 
     const router = useRouter();
     const operateBar = {
+        view: true,
         create: "/knowledge/zettle/create",
         placeholder: "搜索知识卡片",
+        searchKey: "name",
     }
-    function handleClick(data: any){
+
+    function handleClick(data: any) {
         router.push(`/knowledge/zettle/${data.id}`);
     }
 
     return (
-        <Tabs defaultValue="table">
+        <Tabs defaultValue="kanban">
             <div className="flex items-center justify-between">
-                <Heading title={"知识卡片"} description={"知识卡片管理页面"} />
+                <Heading title={"知识卡片"} description={"知识卡片管理页面"}/>
                 <TabsList className="grid grid-cols-2">
-                  <TabsTrigger value="kanban">看板</TabsTrigger>
-                  <TabsTrigger value="table">列表</TabsTrigger>
+                    <TabsTrigger value="kanban">看板</TabsTrigger>
+                    <TabsTrigger value="table">列表</TabsTrigger>
                 </TabsList>
             </div>
             <TabsContent value="kanban" className="w-full">
-                <KanbanView dataList={zettleDemoList} onClick={handleClick} operateBar={operateBar}/>
+                <KanbanView initDataList={zettleDemoList} onClick={handleClick} operateBar={operateBar}/>
             </TabsContent>
-            <TabsContent value="table"  className="w-full">
-                <ZettleManageTable data={zettleDemoList} />
+            <TabsContent value="table" className="w-full">
+                <ZettleManageTable data={zettleDemoList}/>
             </TabsContent>
-          </Tabs>
+        </Tabs>
     );
 }
 

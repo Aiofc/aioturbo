@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { ColumnDef } from "@tanstack/react-table";
-import { KnowledgeManageTableColumns } from "../../../types";
-import { Button } from "../../ui/button";
+import React, {useState} from "react";
+import {ColumnDef} from "@tanstack/react-table";
+import {KnowledgeManageTableColumns} from "../../../types";
+import {Button} from "../../ui/button";
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "../../ui/dropdown-menu";
-import { Checkbox } from "../../ui/checkbox";
-import { TableColumnHeader } from "../../common/views/TableColumnHeader.tsx";
-import { useRouter } from "next/navigation";
+import {Checkbox} from "../../ui/checkbox";
+import {TableColumnHeader} from "../../common/views/TableColumnHeader.tsx";
+import {useRouter} from "next/navigation";
 import {
     Dialog,
     DialogClose,
@@ -21,14 +21,14 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "../../ui/dialog";
-import { Label } from "../../ui/label";
-import { Input } from "../../ui/input";
+import {Label} from "../../ui/label";
+import {Input} from "../../ui/input";
 
 const confirm_column = "name";
 export const columns: ColumnDef<KnowledgeManageTableColumns>[] = [
     {
         id: "select",
-        header: ({ table }) => (
+        header: ({table}) => (
             <Checkbox
                 checked={
                     table.getIsAllPageRowsSelected() ||
@@ -39,7 +39,7 @@ export const columns: ColumnDef<KnowledgeManageTableColumns>[] = [
                 className='translate-y-[2px]'
             />
         ),
-        cell: ({ row }) => (
+        cell: ({row}) => (
             <Checkbox
                 checked={row.getIsSelected()}
                 onCheckedChange={(value) => row.toggleSelected(!!value)}
@@ -52,10 +52,10 @@ export const columns: ColumnDef<KnowledgeManageTableColumns>[] = [
     },
     {
         accessorKey: "id",
-        header: ({ column }) => (
-            <TableColumnHeader column={column} title='ID' className='hidden' />
+        header: ({column}) => (
+            <TableColumnHeader column={column} title='ID' className='hidden'/>
         ),
-        cell: ({ row }) => (
+        cell: ({row}) => (
             <div className='w-[80px] hidden'>{row.getValue("id")}</div>
         ),
         enableSorting: false,
@@ -63,25 +63,25 @@ export const columns: ColumnDef<KnowledgeManageTableColumns>[] = [
     },
     {
         accessorKey: "name",
-        header: ({ column }) => (
-            <TableColumnHeader column={column} title='知识库名称' />
+        header: ({column}) => (
+            <TableColumnHeader column={column} title='知识库名称'/>
         ),
-        cell: ({ row }) => <div className='w-[80px]'>{row.getValue("name")}</div>,
+        cell: ({row}) => <div className='w-[80px]'>{row.getValue("name")}</div>,
         enableSorting: true,
         enableHiding: true,
     },
     {
         accessorKey: "active",
-        header: ({ column }) => <TableColumnHeader column={column} title='状态' />,
-        cell: ({ row }) => <div className='w-[80px]'>{row.getValue("active")? "启用": "禁用"}</div>,
+        header: ({column}) => <TableColumnHeader column={column} title='状态'/>,
+        cell: ({row}) => <div className='w-[80px]'>{row.getValue("active") ? "启用" : "禁用"}</div>,
         enableSorting: true,
         enableHiding: true,
     },
     {
         id: "actions",
-        cell: ({ row }) => {
+        cell: ({row}) => {
             const router = useRouter();
-            const [name, setName] = useState<string|null>(null)
+            const [name, setName] = useState<string | null>(null)
             const [status, setStatus] = useState<boolean>(false)
             return (
                 <div>

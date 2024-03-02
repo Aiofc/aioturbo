@@ -6,8 +6,6 @@ interface Props {
 
 export default function KnowledgeLayout({ children }: Props) {
   return (
-    <div className="container relative">
-      <section>{children}</section>
-    </div>
+      <div className="mr-10 ml-10">{children}</div>
   )
 }

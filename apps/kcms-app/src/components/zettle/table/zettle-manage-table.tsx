@@ -19,9 +19,10 @@ import {columns} from "./zettle-manage-columns.tsx";
 interface ZettleManageTableProps {
     data: ZettlekastenType[];
 }
+
 function ZettleManageTable({
-    data
-}: ZettleManageTableProps) {
+                               data
+                           }: ZettleManageTableProps) {
     const [rowSelection, setRowSelection] = useState({});
     const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -54,7 +55,7 @@ function ZettleManageTable({
 
     return (
         <div>
-            <Separator />
+            <Separator/>
             <TableToolbar
                 className='mb-2 mt-2'
                 table={table}
@@ -63,7 +64,7 @@ function ZettleManageTable({
             />
             <ScrollArea className='rounded-md border h-[50vh]'>
                 <TableCore table={table} columns={columns}/>
-                <ScrollBar orientation='horizontal' />
+                <ScrollBar orientation='horizontal'/>
             </ScrollArea>
             <div className="flex items-center justify-end space-x-2 py-4">
                 <div className="flex-1 text-sm text-muted-foreground">
