@@ -21,9 +21,9 @@ type MoveHandler = {
     index: number;
 }
 
-type RenameHandler = {id: string, name: string, node: NodeApi<TreeData>};
+type RenameHandler = { id: string; name: string; node: NodeApi<TreeData>; };
 
-type DeleteHandler = {ids: string[]};
+type DeleteHandler = { ids: string[]; nodes: NodeApi<TreeData>[]; };
 
 function EditTree({
                       treeData
@@ -36,9 +36,10 @@ function EditTree({
         console.log("data", data);
     }, [data]);
 
-    function onRename({ name, id }: RenameHandler) {
-        if(id.includes("simple-tree-id-"))
-        console.log("创建", name, id);
+    function onRename({name, id, node}: RenameHandler) {
+        controller.onRename({name, id, node})
+        if (id.includes("simple-tree-id-"))
+            console.log("创建", name, id);
         // 请求后端创建值
         else console.log("重命名", name, id);
         // 请求后端修改值
@@ -46,13 +47,15 @@ function EditTree({
 
     function onMove({dragIds, parentId, index, dragNodes, parentNode}: MoveHandler) {
         controller.onMove({dragIds, parentId, index, dragNodes, parentNode});
-        dragNodes.forEach((node) => { node.data.parentId = parentId;})
+        dragNodes.forEach((node) => {
+            node.data.parentId = parentId;
+        })
         // 请求后端修改值
     }
 
 
-    function onDelete({ ids }: DeleteHandler) {
-        // controller.onDelete({ ids });
+    function onDelete({ids, nodes}: DeleteHandler) {
+        controller.onDelete({ids, nodes});
         console.log("onDelete", ids);
         // 请求后端批量删除
     }
