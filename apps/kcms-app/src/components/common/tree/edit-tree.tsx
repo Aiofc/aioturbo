@@ -8,7 +8,6 @@ import {Input} from "../../ui/input.tsx";
 import {Button} from "../../ui/button.tsx";
 import {BizTreeDataList, TreeData} from "../../../types";
 import {useControlTree} from "./hook/use-control-tree.ts";
-import {MdOutlineSaveAs} from "react-icons/md";
 
 interface EditTreePProps {
     treeData: BizTreeDataList;
@@ -32,7 +31,6 @@ function EditTree({
     const [term, setTerm] = useState("");
     const treeRef = useRef(null);
     const [data, controller] = useControlTree(BizDataToTreeData(treeData));
-    const [save, setSave] = useState<string | null>(null);
 
     function onRename({name, id, node}: RenameHandler) {
         node.data.title = name;
@@ -79,12 +77,17 @@ function EditTree({
                 onClick={() => treeRef.current.createLeaf()} title="新建">
                 <AiOutlineFileAdd/>
             </Button>
-            <Button
-                variant="link"
-                // @ts-ignore
-                onClick={() => setSave(true) } title="保存">
-                <MdOutlineSaveAs />
-            </Button>
+            {/*<Button*/}
+            {/*    variant="link"*/}
+            {/*    onClick={() => {*/}
+            {/*        // @ts-ignore*/}
+            {/*        subscribe((state) => {*/}
+            {/*            console.log(state.nodeId);*/}
+            {/*            console.log(state.changeName);*/}
+            {/*        });*/}
+            {/*    } } title="保存">*/}
+            {/*    */}
+            {/*</Button>*/}
         </div>
     );
 
@@ -116,7 +119,7 @@ function EditTree({
                 onMove={onMove}
                 onDelete={onDelete}
             >
-                {(node) => <Node {...node} save={save} setSave={setSave}/>}
+                {(node) => <Node {...node} />}
             </Tree>
         </div>
     );

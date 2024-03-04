@@ -111,7 +111,7 @@ function KanbanView({
                                     className="overflow-hidden shadow-sm rounded-lg group"
                                     onClick={() => (onClick ? onClick(data) : null)}
                                 >
-                                    <Card className="p-4 h-full">
+                                    <Card className="p-4 h-72 flex flex-col">
                                         <CardHeader>
                                             <div>
                                                 <div className="flex flex-row justify-between items-center mb-2">
@@ -131,12 +131,14 @@ function KanbanView({
                                                 </CardDescription>
                                             </div>
                                         </CardHeader>
-                                        <CardContent>
-                                            <p className="text-sm text-muted-foreground overflow-ellipsis overflow-hidden h-20 line-clamp-4">
-                                                {content ? data[content] : data.content}
-                                            </p>
-                                        </CardContent>
-                                        <CardFooter>
+                                        {content || data.content ? (
+                                            <CardContent>
+                                                <p className="text-sm text-muted-foreground overflow-ellipsis overflow-hidden h-20 line-clamp-4">
+                                                    {content ? data[content] : data.content}
+                                                </p>
+                                            </CardContent>
+                                        ): null}
+                                        <CardFooter className="mt-auto">
                                             <div>
                                                 {data.active ? (<Badge variant="default">启用</Badge>) : (<Badge variant="destructive">禁用</Badge>)}
                                             </div>

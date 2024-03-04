@@ -10,10 +10,9 @@ import {sourceData} from "../../demo-data/tree-demo.ts";
 import KnowledgeComponent from "../../components/knowledge/knowledge-component.tsx";
 import KanbanView from "../../components/common/views/KanbanView.tsx";
 import {BizTreeData} from "../../types";
+import StaticTree from "../../components/common/static-tree/static-tree.tsx";
 
 export default function TestPage() {
-
-
 
     const operate = {
         searchKey: "title",
@@ -22,12 +21,13 @@ export default function TestPage() {
     return (
         <div className="flex flex-row">
             <div className="w-72">
-                <EditTree treeData={sourceData}/>
+                {/*<EditTree treeData={sourceData}/>*/}
+                <StaticTree/>
             </div>
-            <div className="ml-4 mt-3">
-                <KanbanView initDataList={sourceData} title={"title"} onClick={() => null}
-                            operateBar={operate}/>
-            </div>
+            {/*<div className="ml-4 mt-3">*/}
+            {/*    <KanbanView initDataList={sourceData} title={"title"} onClick={() => null}*/}
+            {/*                operateBar={operate}/>*/}
+            {/*</div>*/}
         </div>
 
     );

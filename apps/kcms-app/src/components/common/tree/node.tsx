@@ -1,28 +1,18 @@
 import {AiFillFolder, AiFillFile} from "react-icons/ai";
-import {MdArrowRight, MdArrowDropDown, MdEdit} from "react-icons/md";
+import {MdArrowRight, MdArrowDropDown, MdEdit, MdOutlineSaveAs} from "react-icons/md";
 import {RxCross2} from "react-icons/rx";
 import {Input} from "../../ui/input.tsx";
 import {NodeRendererProps} from "react-arborist";
 import {TreeData} from "../../../types";
-import {useEffect, useRef, useState} from "react";
+import React, { useEffect, useState} from "react";
 
 type NodeComponentProps = NodeRendererProps<TreeData> & {
-    setSave?: (data: boolean) => void;
-    save?: boolean;
 }
 
-const Node = ({node, style, dragHandle, tree, setSave, save}: NodeComponentProps) => {
+const Node = ({node, style, dragHandle, tree}: NodeComponentProps) => {
     const CustomIcon = node.data.icon;
     const iconColor = node.data.iconColor;
     const [inputValue, setInputValue] = useState(node.data.name);
-
-    useEffect(() => {
-        if (node.isEditing) console.log(inputValue);
-        if (!!save && node.isEditing) {
-            console.log(inputValue);
-            setSave?.(false);
-        }
-    }, [save, node.isEditing, setSave, inputValue]);
 
     return (
         <div
@@ -69,7 +59,9 @@ const Node = ({node, style, dragHandle, tree, setSave, save}: NodeComponentProps
                             className="w-full h-6 border-1 rounded-md px-1.5 focus:outline-none focus:border-blue-500"
                             type="text"
                             value={inputValue}
-                            onChange={(e) => setInputValue(e.target.value)}
+                            onChange={(e) => {
+                                setInputValue(e.currentTarget.value)
+                            }}
                             onFocus={(e) => e.currentTarget.select()}
                             // onBlur={() => node.reset()}
                             onKeyDown={(e) => {
@@ -86,12 +78,18 @@ const Node = ({node, style, dragHandle, tree, setSave, save}: NodeComponentProps
 
             <div className="h-full flex">
                 <div className="flex flex-row items-center mr-2.5">
-                    <button onClick={() => node.edit()} title="Rename...">
-                        <MdEdit/>
-                    </button>
+                    {node.isEditing ? (
+                        <button onClick={() => node.submit(inputValue)} title="Delete">
+                            <MdOutlineSaveAs/>
+                        </button>) : (
+                        <button onClick={() => node.edit()} title="Rename...">
+                            <MdEdit/>
+                        </button>)
+                    }
                     <button onClick={() => tree.delete(node.id)} title="Delete">
                         <RxCross2/>
                     </button>
+
                 </div>
             </div>
         </div>

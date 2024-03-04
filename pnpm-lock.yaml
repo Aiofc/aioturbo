@@ -367,6 +367,9 @@ importers:
       zod:
         specifier: ^3.22.4
         version: 3.22.4
+      zustand:
+        specifier: ^4.5.1
+        version: 4.5.1(@types/react@18.2.48)(react@18.2.0)
     devDependencies:
       '@next/eslint-plugin-next':
         specifier: ^14.0.4
